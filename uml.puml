@@ -1,0 +1,6 @@
+@startuml
+class io.flutter.plugins.GeneratedPluginRegistrant {
+- {static} String TAG
++ {static} void registerWith(FlutterEngine)
+}
+@enduml

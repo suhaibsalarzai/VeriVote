@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1025065330079",
+    "project_id": "verivote-fe066",
+    "storage_bucket": "verivote-fe066.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025065330079:android:256ea52bec92c6c30089aa",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025065330079-0lr2e6ma2qddrqbt8tgo9skaq20h1k69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNAR_2TO5Bvqg2Yz3sLbuXZ7Wzo6Ak4TE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025065330079-0lr2e6ma2qddrqbt8tgo9skaq20h1k69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

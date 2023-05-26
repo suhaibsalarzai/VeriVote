@@ -55,6 +55,7 @@ class _CandidatesListState extends State<CandidatesList> {
       'candidateParty': selectedTileParty,
       'voterId': widget.id,
       'voterName': widget.name,
+      'currentElection': widget.electionName,
     };
 
     return Scaffold(
@@ -319,6 +320,9 @@ class _CandidatesListState extends State<CandidatesList> {
                                                 .collection('votes')
                                                 .where('voterId',
                                                     isEqualTo: widget.id)
+                                                .where('electionName',
+                                                    isEqualTo:
+                                                        widget.electionName)
                                                 .get()
                                                 .then((querySnapshot) {
                                               // If there are no documents with the same voterId, add the new voteData document
@@ -328,11 +332,14 @@ class _CandidatesListState extends State<CandidatesList> {
                                                     .add(voteData)
                                                     .then((value) {
                                                   // Navigate to the other page after the vote is added
-                                                  Navigator.push(
+                                                  Navigator.pushReplacement(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Voted()),
+                                                        builder: (context) => Voted(
+                                                            ElectionName: widget
+                                                                .electionName,
+                                                            name: widget.name,
+                                                            id: widget.id)),
                                                   );
                                                 }).catchError((error) {
                                                   // Show a SnackBar with an error message
@@ -363,8 +370,8 @@ class _CandidatesListState extends State<CandidatesList> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                  content: Text(
-                                                      'Failed to check for existing votes: $error'),
+                                                  content:
+                                                      Text('Failed : $error'),
                                                   duration:
                                                       Duration(seconds: 3),
                                                 ),
@@ -433,7 +440,7 @@ class _CandidatesListState extends State<CandidatesList> {
                                                   width: 18 * fem,
                                                   height: 12 * fem,
                                                   child: Image.asset(
-                                                    'assets/page-1/images/arrow-right-TzE.png',
+                                                    'assets/page-1/images/arrow-right.png',
                                                     width: 18 * fem,
                                                     height: 12 * fem,
                                                   ),

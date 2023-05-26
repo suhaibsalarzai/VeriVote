@@ -121,41 +121,41 @@ class _TwoStepVerifyState extends State<TwoStepVerify> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      // frame207diW (2:1086)
-                      margin: EdgeInsets.fromLTRB(
-                          24 * fem, 0 * fem, 24 * fem, 29 * fem),
-                      width: double.infinity,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 9 * fem, 0 * fem),
-                            child: Text(
-                              'Didn’t receive the code?',
-                              style: SafeGoogleFont(
-                                'Poppins',
-                                fontSize: 14 * ffem,
-                                fontWeight: FontWeight.w500,
-                                height: 1.5 * ffem / fem,
-                                color: Color(0xff707e94),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Resend (0:09)',
-                            style: SafeGoogleFont(
-                              'Poppins',
-                              fontSize: 14 * ffem,
-                              fontWeight: FontWeight.w500,
-                              height: 1.5 * ffem / fem,
-                              color: Color(0xffeb5757),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   // frame207diW (2:1086)
+                    //   margin: EdgeInsets.fromLTRB(
+                    //       24 * fem, 0 * fem, 24 * fem, 29 * fem),
+                    //   width: double.infinity,
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Container(
+                    //         margin: EdgeInsets.fromLTRB(
+                    //             0 * fem, 0 * fem, 9 * fem, 0 * fem),
+                    //         child: Text(
+                    //           'Didn’t receive the code?',
+                    //           style: SafeGoogleFont(
+                    //             'Poppins',
+                    //             fontSize: 14 * ffem,
+                    //             fontWeight: FontWeight.w500,
+                    //             height: 1.5 * ffem / fem,
+                    //             color: Color(0xff707e94),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Text(
+                    //         'Resend (0:09)',
+                    //         style: SafeGoogleFont(
+                    //           'Poppins',
+                    //           fontSize: 14 * ffem,
+                    //           fontWeight: FontWeight.w500,
+                    //           height: 1.5 * ffem / fem,
+                    //           color: Color(0xffeb5757),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     GestureDetector(
                       onTap: () async {
                         final credentials = PhoneAuthProvider.credential(
@@ -165,35 +165,20 @@ class _TwoStepVerifyState extends State<TwoStepVerify> {
                         try {
                           await auth.signInWithCredential(credentials);
 
-                          FirebaseFirestore.instance
-                              .collection('votes')
-                              .where('voterId', isEqualTo: widget.IdNum)
-                              .get()
-                              .then((querySnapshot) {
-                            // If there are no documents with the same voterId
-                            if (querySnapshot.docs.isEmpty) {
-                              // Navigate to the other page
-                              Navigator.of(context).push(MaterialPageRoute(
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
                                   builder: (context) => Elections(
                                         name: widget.userName,
                                         id: widget.IdNum,
                                       )));
-                            } else {
-                              // If there are documents with the same voterId
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ElectionStatus()));
-                            }
-                          }).catchError((error) {
-                            // Show a SnackBar with an error message
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Unexpected Error: $error'),
-                                duration: Duration(seconds: 3),
-                              ),
-                            );
-                          });
                         } catch (e) {
-                          print(e);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Invalid Code retry'),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                          print('This is the error $e');
                         }
                         //   Navigator.of(context).push(MaterialPageRoute(
                         //       builder: (context) => Elections()));
@@ -232,11 +217,10 @@ class _TwoStepVerifyState extends State<TwoStepVerify> {
                               ),
                             ),
                             Container(
-                              // arrowrightK7U (2:1090)
                               width: 18 * fem,
                               height: 12 * fem,
                               child: Image.asset(
-                                'assets/page-1/images/arrow-right-qrW.png',
+                                'assets/page-1/images/arrow-right.png',
                                 width: 18 * fem,
                                 height: 12 * fem,
                               ),

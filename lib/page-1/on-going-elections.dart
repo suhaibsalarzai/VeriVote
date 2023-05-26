@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/page-1/login-1-.dart';
 import 'dart:ui';
 import 'package:myapp/page-1/name-of-candidates.dart';
 import 'package:myapp/utils.dart';
@@ -52,20 +53,51 @@ class _ElectionsState extends State<Elections> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              width: 50,
-              height: 50,
-              child: Image.asset(
-                'assets/page-1/images/go_back.png',
-                // width: 20,
-                // height: 20,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // Navigator.of(context).pop();
+                },
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  width: 50,
+                  height: 50,
+                  child: Image.asset(
+                    'assets/page-1/images/go_back.png',
+                    // width: 20,
+                    // height: 20,
+                  ),
+                ),
               ),
-            ),
+
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.black,
+                  ),
+                ),
+              )
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              //   child: ElevatedButton(
+              //     onPressed: () {},
+              //     child: Text('Logout'),
+              //     style: ButtonStyle(),
+              //   ),
+              // )
+            ],
           ),
           Container(
             padding: EdgeInsets.fromLTRB(24 * fem, 7 * fem, 24 * fem, 10 * fem),
@@ -125,14 +157,57 @@ class _ElectionsState extends State<Elections> {
                       return Column(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => CandidatesList(
-                                        electionName: document['Elections'],
-                                        electionId: document.id,
-                                        name: widget.name,
-                                        id: widget.id,
-                                      )));
+                            onTap: () async {
+                              try {
+                                print('${document['Elections']}');
+                                FirebaseFirestore.instance
+                                    .collection('votes')
+                                    .where('voterId', isEqualTo: widget.id)
+                                    .where('currentElection',
+                                        isEqualTo: document['Elections'])
+                                    .get()
+                                    .then((querySnapshot) {
+// If there are no documents with the same voterId
+                                  if (querySnapshot.docs.isEmpty) {
+// Navigate to the other page
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CandidatesList(
+                                                  electionName:
+                                                      document['Elections'],
+                                                  electionId: document.id,
+                                                  name: widget.name,
+                                                  id: widget.id,
+                                                )));
+                                  } else {
+// If there are documents with the same voterId
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Already Voted in this Election'),
+                                        duration: Duration(seconds: 3),
+                                      ),
+                                    );
+                                  }
+                                }).catchError((error) {
+// Show a SnackBar with an error message
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Unexpected Error: $error'),
+                                      duration: Duration(seconds: 3),
+                                    ),
+                                  );
+                                });
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Invalid Code retry'),
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
+                                print('This is the error $e');
+                              }
                             },
                             child: Container(
                               height: 60 * fem,
@@ -160,7 +235,7 @@ class _ElectionsState extends State<Elections> {
                                     width: 18 * fem,
                                     height: 12 * fem,
                                     child: Image.asset(
-                                      'assets/page-1/images/arrow-right-pSz.png',
+                                      'assets/page-1/images/arrow-right.png',
                                       width: 18 * fem,
                                       height: 12 * fem,
                                     ),

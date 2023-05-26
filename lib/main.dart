@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/splashScreen.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/page-1/login-1-.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,11 +25,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             color: Colors.white,
           )),
-      home: Scaffold(
-        body: SingleChildScrollView(
-          child: Login(),
-        ),
-      ),
+      home: const SplashScreen(),
     );
   }
 }

@@ -8,10 +8,11 @@ First run
 Flutter pub get 
 to get all the neccessary dependencies 
 
-
-
-
 Also make sure to configure firebase 
+
+Live Results Screen
+![PHOTO-2023-05-18-23-01-23](https://github.com/suhaibsalarzai/VotingApplication/assets/60424730/33ed709b-a6da-41ca-840a-07c92af16225)
+
 
 Splash Screen
 ![WhatsApp Image 2023-05-18 at 11 01 08 PM](https://github.com/suhaibsalarzai/VotingApplication/assets/60424730/6436257d-95d1-4465-8c29-f075eb0b60f8)
